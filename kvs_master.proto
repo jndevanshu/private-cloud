@@ -1,0 +1,46 @@
+// gRPC service definition for a "kvs_master",
+// with string key/value pairs kept on the server.
+// Compilation:
+// protoc -I=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` kvs_master.proto
+// protoc -I=. --cpp_out=. kvs_master.proto
+
+syntax = "proto3";
+
+package kvs_master;
+
+service KVS_master_service {
+  // Get Leader: the url stored on the master server for a given username
+  rpc get_leader (GetLeaderValueRequest) returns (GetLeaderValueReply) {}
+
+  // Send Addr: send own address to cluster master
+  rpc send_addr (SendAddrValueRequest) returns (SendAddrValueReply) {}
+
+  // Set Leader: the server's value for a cluster master
+  rpc set_leader (SetLeaderValueRequest) returns (SetLeaderValueReply) {}
+}
+
+message GetLeaderValueRequest {
+  string user = 1;
+}
+
+message GetLeaderValueReply {
+  string url = 1;
+}
+
+message SendAddrValueRequest {
+  string user = 1;
+}
+
+message SendAddrValueReply {
+  string addr = 1;
+}
+
+message SetLeaderValueRequest {
+  string key = 1;
+  string url = 2;
+}
+
+message SetLeaderValueReply {
+   // Returns 1 on success, 0 on failure.
+   string ret = 1;
+}

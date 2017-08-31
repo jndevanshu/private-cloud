@@ -1,0 +1,110 @@
+// gRPC service definition for a "kvs_cluster",
+// with string key/value pairs kept on the server.
+// Compilation:
+// protoc -I=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` kvs_cluster1.proto
+// protoc -I=. --cpp_out=. kvs_cluster.proto
+
+syntax = "proto3";
+
+package kvs_cluster;
+
+service KVS_cluster_service {
+  // Get the value stored on the server for a given key
+  rpc get (GetValueRequest) returns (GetValueReply) {}
+
+  // Put the server's value for a given key
+  rpc put (PutValueRequest) returns (PutValueReply) {}
+
+  // CPut the server's value for a given key
+  rpc cput (CPutValueRequest) returns (CPutValueReply) {}
+
+  // Delete the server's value for a given key
+  rpc del (DeleteValueRequest) returns (DeleteValueReply) {}
+
+  rpc selfAddr (SendSelfAddrRequest) returns (SendSelfAddrReply) {}
+
+  rpc clusterMaster (GetMasterInitRequest) returns (GetMasterInitReply) {}
+
+  rpc get_update (GetUpdateRequest) returns (GetUpdateReply) {}
+
+  rpc diediedie (DieRequest) returns (DieReply) {}
+}
+
+message DieRequest {
+  
+}
+
+message DieReply {
+  
+}
+
+message GetUpdateRequest {
+  string key = 1;
+  string val = 2;
+}
+
+message GetUpdateReply {
+
+}
+
+message SendSelfAddrRequest {
+  
+}
+
+message SendSelfAddrReply {
+  string addr = 1;
+}
+
+message GetMasterInitRequest {
+
+}
+
+message GetMasterInitReply {
+  string ret = 1;
+}
+
+message GetValueRequest {
+  string row = 1;
+  string col = 2;
+}
+
+message GetValueReply {
+  // Empty string returned when key not found on the server.
+  string value = 1;
+}
+
+message PutValueRequest {
+  string row = 1;
+  string col = 2;
+  string value = 3;
+}
+
+message PutValueReply {
+   // Returns 1 on success, 0 on failure.
+   // int32 val = 1;
+   string value = 1;
+}
+
+message CPutValueRequest {
+  string row = 1;
+  string col = 2;
+  string value1 = 3;
+  string value2 = 4;
+}
+
+message CPutValueReply {
+   // Returns 1 on success, 0 on failure.
+   // int32 val = 1;
+   string value = 1;
+}
+
+message DeleteValueRequest {
+  string row = 1;
+  string col = 2;
+}
+
+message DeleteValueReply {
+   // Returns 1 on success, 0 on failure.
+   // int32 val = 1;
+   string value = 1;
+}

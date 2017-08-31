@@ -1,0 +1,4 @@
+pkill loadbalancer
+pkill httpserver
+pkill kvs_master
+pkill kvs_cluster
